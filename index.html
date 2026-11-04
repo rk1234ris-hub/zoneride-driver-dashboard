@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZoneRide Driver</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="top">
+    <div class="logo">Zone<b>Ride</b></div>
+    <span class="pill" id="conn">Connecting</span>
+    <div class="sp"></div>
+    <span id="who" style="color:var(--mute);font-size:14px"></span>
+    <span style="font-weight:700;font-size:13px" id="onTxt">Online</span>
+    <button class="sw" id="online" role="switch" aria-checked="true" aria-label="Online status"></button>
+  </header>
+  <main id="main">
+    <div class="col">
+      <div class="card mapbox">
+        <div id="map" role="region" aria-label="Satellite map showing demand zones"></div>
+      </div>
+      <div class="card" id="detail"></div>
+    </div>
+    <div class="col">
+      <div class="card"><h3>Busiest zones right now</h3><div id="list"></div>
+        <p class="note">Sorted by cabs needed compared with cabs nearby. Red means high demand, orange medium, green balanced, blue low.</p></div>
+    </div>
+
+    <section class="card wide" id="fc">
+      <div class="row" style="margin-top:0">
+        <h3 style="margin:0" id="fctitle">History vs prediction</h3>
+        <div class="seg" id="hz" role="group" aria-label="Forecast length">
+          <button type="button" data-h="30" aria-pressed="false">Next 30 min</button>
+          <button type="button" data-h="60" aria-pressed="true">Next 60 min</button>
+        </div>
+      </div>
+      <p class="fsum" id="fsum"></p>
+      <canvas id="chart" role="img" aria-label="Chart of past and predicted cabs needed"></canvas>
+      <div class="legend">
+        <span><i style="border-color:#ffc933"></i>History (cabs needed)</span>
+        <span><i style="border-color:#5b8def;border-top-style:dashed"></i>Prediction</span>
+        <span><i style="border-color:#ff4d3d;border-top-style:dashed"></i>Prediction above cabs nearby</span>
+        <span><i style="border-color:#2ecc71;border-top-width:2px"></i>Cabs nearby</span>
+      </div>
+      <p class="note">Prediction uses the arrival and event schedule for the selected zone. Time before you opened this page is simulated history; real readings are added while the page stays open.</p>
+    </section>
+  </main>
+</div>
+
+<!-- AI assistant -->
+<button id="botBtn" class="fab" type="button" aria-expanded="false" aria-controls="bot" aria-label="Open ZoneBot assistant">AI</button>
+<section id="bot" class="bot" role="dialog" aria-label="ZoneBot assistant" hidden>
+  <header class="bothead"><div><b>ZoneBot</b><small>AI driver assistant</small></div>
+    <button id="botX" class="ghost" type="button" aria-label="Close assistant">&#10005;</button></header>
+  <div id="botLog" class="log" aria-live="polite"></div>
+  <div id="chips" class="chips"></div>
+  <form id="botForm" class="botform" autocomplete="off">
+    <input id="botIn" placeholder="Ask about zones, demand, forecast..." aria-label="Message to ZoneBot">
+    <button class="send" type="submit">Send</button>
+  </form>
+</section>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
